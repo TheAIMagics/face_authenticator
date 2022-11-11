@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body  onload="configure();">
+    <div class="camera">
+        <div id="my_camera" >
+
+        </div>
+        <div class="camera-button" >
+          
+            <input type="button" onClick="take_snapshot()" value="take_snapshot">
+        </div>
+    </div>
+
+    <p id="state">No images stored in your browser.</p>
+<div id="list">
+</div>
+
+<a href="#" id="deleteImgs">Delete Images</a>
+
+<script type="text/javascript" src="../static/assets/webcam.min.js"></script>
+
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script>
+var imagesObject = [];
+    function configure(){
+    Webcam.set(
+      {
+      
+        width:500,
+        height:450,
+        dest_width: 500,
+        dest_height: 450,
+        image_format :'jpeg',
+        jpeg_quality : 90
+    })
+
+    Webcam.attach("#my_camera");
+}
+
+function take_snapshot() {
+    // take snapshot and get image data
+    Webcam.snap( function(data_uri) {
+       // display results in page
+       displayImgData(data_uri);
+       addImage(data_uri)
+     });
+ }
+ function addImage(imgData){
+  imagesObject.push(imgData);
+  displayNumberOfImgs();
+  localStorage.setItem("images", JSON.stringify(imagesObject));
+}
+
+function displayImgData(imgData){
+    var span = document.createElement('span');
+    span.innerHTML = '<img class="thumb" src="' + imgData + '"/>';
+    document.getElementById('list').insertBefore(span, null);
+  }
+
+function displayNumberOfImgs(){
+  if(imagesObject.length > 0){
+
+    document.getElementById("state").innerHTML = imagesObject.length + " image" + ((imagesObject.length > 1) ? "s" : "") + " stored in your browser";
+    
+    document.getElementById("deleteImgs").style.display = "inline";
+    
+  } else {
+    document.getElementById("state").innerHTML = "No images stored in your browser.";
+    document.getElementById("deleteImgs").style.display = "none";
+  }
+}
+
+function deleteImages(){
+  imagesObject = [];
+  localStorage.removeItem("images");
+  displayNumberOfImgs()
+  document.getElementById('list').innerHTML = "";
+}
+document.getElementById('deleteImgs').addEventListener("click", deleteImages);
+loadFromLocalStorage();
+</script>
+</body>
+
+</html>

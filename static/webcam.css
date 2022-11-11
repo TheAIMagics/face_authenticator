@@ -1,0 +1,57 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    background: #00416A;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #E4E5E6, #00416A);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #E4E5E6, #00416A);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.camera{
+    width: 512px;
+    height: 461px;
+    position: relative;
+    border : 5px solid white;
+}
+#vid{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.camera-button{
+    width: 72px;
+    font-size: 2em;
+    font-weight: bold;
+    padding: 0.5em;
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%) translateY(-20px);
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+}
+
+.camera-button:hover{
+    background: white;
+    color: #222;
+    transition: all 200ms linear;
+}
+
+.effect{
+    opacity: 0.5;
+    transition: all 100ms ease;
+}
